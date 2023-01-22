@@ -1,0 +1,75 @@
+/*return a lighter table to work with*/
+WITH tot AS
+	(
+		SELECT
+		
+		ilbo.item,
+		ilbo.warehouse_id,
+		SUM(ilbo.qty) AS qty
+		
+		FROM dl.inv_ow ilbo
+		
+		WHERE ilbo.region_id = 'EU'
+		AND ilbo.day = TO_DATE(getdate(), 'YYYY/MM/DD')-1
+		AND ilbo.warehouse_id IN ('SW78','RE34')
+		AND ilbo.condition = 'SELLABLE'
+		AND ilbo.item IN ('AB1','AB2','AB3','AB4','AB5','AB6','AB7')
+	)
+
+/*return the data for warehouse1*/
+sw78 AS
+	(
+		SELECT
+		
+		ilbo.item,
+		ilbo.warehouse_id,
+		SUM(ilbo.qty) AS qty
+		
+		FROM tot ilbo
+		
+		WHERE 
+		AND ilbo.warehouse_id IN ('SW78')
+		
+		GROUP BY 
+		ilbo.item,
+		ilbo.warehouse_id
+    ),
+	
+/*return the data for warehouse1*/	
+re34 AS
+	(
+		SELECT
+		
+		ilbo.item,
+		ilbo.warehouse_id,
+		SUM(ilbo.qty) AS qty
+		
+		FROM tot ilbo
+		
+		WHERE
+		AND ilbo.warehouse_id IN ('RE34')
+		
+		GROUP BY 
+		ilbo.item,
+		ilbo.warehouse_id
+	)
+
+
+/*check the items that are unique and the sahre of the items between country*/
+SELECT
+
+COALESCE(sw78.item, re34.item) AS item,
+COALESCE(sw78.qty,0) AS sw78_QTY,
+COALESCE(re34.qty,0) AS re34_QTY,
+sw78_QTY * 100 /(sw78_QTY + re34_QTY) AS sw78_share,
+re34_QTY * 100 /(sw78_QTY + re34_QTY) AS re34_share,
+CASE
+    WHEN sw78_QTY = 0 THEN 'unique IN re34'
+    WHEN re34_QTY = 0 THEN 'unique IN sw78'
+    ELSE 'NORMAL'
+END AS unique_check
+
+    
+FROM sw78
+FULL OUTER JOIN re34
+ON sw78.item = re34.item
