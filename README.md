@@ -1,6 +1,6 @@
 # sites_balance
 Query created to  see the balance for specific items between the sites of the country
-<p>Schemas, Tables, Columns and Values are changed from the original ones to avoid sensitive data being released outside the company</p>
+<p dir="auto"><span style="color: rgb(226, 80, 65);">Schemas, Tables, Columns and Values are changed from the original ones to avoid sensitive data being released outside the company.</span></p>
 <p>Tool used:</p>
 <ul>
     <li>SQL</li>
