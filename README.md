@@ -11,5 +11,5 @@ Query created to  see the balance for specific items between the sites of the co
 <p><br></p>
 <p><strong>ACHIEVEMENTS</strong></p>
 <p>We redirected the items to have a balance between them.</p>
-<p>Decreased the outbound expenses by 1.3% in Italy and 0.6% in France having the availability in different parts of the country</p>
+<p>Decreased the Outbound expenses by 1.3% in Italy and 0.6% in France having the availability in different parts of the country</p>
 <p><br></p>
